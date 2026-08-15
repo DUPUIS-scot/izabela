@@ -1,24 +1,24 @@
 <!doctype html>
-<html lang="en">
+<html lang="pl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Izabela — books, reviews, events and contact." />
-  <title>Izabela</title>
+  <meta name="description" content="Izabela Kozimala — książki, recenzje, wydarzenia i kontakt." />
+  <title>Izabela Kozimala</title>
   <style>
     :root {
       --bg: #f6f1ea;
       --paper: #fffdf9;
       --ink: #1f1a17;
       --muted: #756b63;
-      --accent: #7b2532;
-      --accent-dark: #541923;
+      --accent: #4f7b2b;
+      --accent-dark: #35561a;
+      --accent-soft: rgba(79, 123, 43, 0.10);
       --line: rgba(31, 26, 23, 0.14);
       --shadow: 0 18px 50px rgba(63, 42, 35, 0.10);
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -26,7 +26,7 @@
       font-family: Georgia, "Times New Roman", serif;
       color: var(--ink);
       background:
-        radial-gradient(circle at top right, rgba(123, 37, 50, 0.10), transparent 30rem),
+        radial-gradient(circle at top right, rgba(79, 123, 43, 0.11), transparent 30rem),
         var(--bg);
       line-height: 1.6;
     }
@@ -55,7 +55,7 @@
     .brand {
       font-size: 1.35rem;
       font-weight: 700;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       text-decoration: none;
       white-space: nowrap;
     }
@@ -100,7 +100,7 @@
     }
 
     .hero {
-      min-height: 72vh;
+      min-height: 70vh;
       display: grid;
       place-items: center;
       text-align: center;
@@ -162,28 +162,178 @@
     }
 
     .section p {
-      max-width: 720px;
+      max-width: 760px;
       margin: 0;
       color: var(--muted);
       font-size: 1.05rem;
     }
 
-    .cards {
+    .book-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-      margin-top: 28px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 34px;
+      margin-top: 34px;
+      align-items: start;
     }
 
-    .card {
-      min-height: 180px;
+    .book-card {
+      display: grid;
+      gap: 22px;
+      grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
+      align-items: center;
       padding: 24px;
       border: 1px solid var(--line);
-      border-radius: 18px;
-      background: #fff;
+      border-radius: 24px;
+      background: linear-gradient(180deg, #fffdf9 0%, #f5f0e8 100%);
     }
 
-    .card h3 { margin-top: 0; }
+    .book-3d {
+      position: relative;
+      width: min(100%, 220px);
+      aspect-ratio: 2 / 3;
+      transform: perspective(1200px) rotateY(-22deg) rotateX(2deg);
+      transform-style: preserve-3d;
+      margin-inline: auto;
+      filter: drop-shadow(0 20px 25px rgba(45, 32, 21, 0.18));
+      transition: transform 220ms ease;
+    }
+
+    .book-card:hover .book-3d {
+      transform: perspective(1200px) rotateY(-10deg) rotateX(1deg) translateY(-4px);
+    }
+
+    .book-face,
+    .book-page,
+    .book-spine {
+      position: absolute;
+      inset: 0;
+      border-radius: 4px 8px 8px 4px;
+    }
+
+    .book-face {
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      text-align: center;
+      border: 1px solid rgba(0,0,0,0.12);
+      overflow: hidden;
+      z-index: 3;
+    }
+
+    .book-face::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.28), transparent 45%);
+      pointer-events: none;
+    }
+
+    .book-page {
+      left: auto;
+      right: -10px;
+      width: 12px;
+      background: repeating-linear-gradient(180deg, #fffdf8 0 2px, #e9e1d7 2px 3px);
+      transform: translateZ(-1px);
+      border-radius: 0 6px 6px 0;
+      z-index: 2;
+      box-shadow: inset 1px 0 0 rgba(0,0,0,0.08);
+    }
+
+    .book-spine {
+      inset: 0 auto 0 -12px;
+      width: 14px;
+      background: linear-gradient(180deg, rgba(53,86,26,0.96), rgba(79,123,43,0.86));
+      transform: rotateY(90deg) translateZ(12px);
+      transform-origin: right center;
+      border-radius: 8px 0 0 8px;
+      box-shadow: inset -1px 0 0 rgba(255,255,255,0.18);
+      z-index: 1;
+    }
+
+    .cover-rose .book-face {
+      background:
+        radial-gradient(circle at 50% 35%, #f2edc8 0 11%, transparent 12%),
+        radial-gradient(circle at 54% 73%, #2f211b 0 7%, transparent 8%),
+        linear-gradient(135deg, transparent 48%, #658b35 49% 51%, transparent 52%),
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.24), transparent 18%),
+        linear-gradient(180deg, #e9e1c9 0 34%, #377f2a 34% 52%, #5f8f2b 52% 64%, #4e7538 64% 100%);
+      color: #1f2a11;
+    }
+
+    .cover-sky .book-face {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.24), transparent 18%),
+        linear-gradient(180deg, #688e3e 0%, #416121 100%);
+      color: #fffef8;
+    }
+
+    .cover-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover-text small {
+      display: block;
+      font-family: Arial, Helvetica, sans-serif;
+      letter-spacing: 0.16em;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      opacity: 0.92;
+    }
+
+    .cover-text strong {
+      display: block;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      line-height: 1.04;
+      margin-bottom: 12px;
+    }
+
+    .cover-text span {
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+    }
+
+    .book-meta h3 {
+      margin: 0 0 8px;
+      font-size: 1.55rem;
+      line-height: 1.15;
+    }
+
+    .book-meta .author {
+      margin: 0 0 12px;
+      color: var(--accent-dark);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .book-meta p {
+      margin: 0 0 14px;
+      font-size: 1rem;
+    }
+
+    .book-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .book-tags li {
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
 
     .contact-link {
       display: inline-block;
@@ -210,19 +360,15 @@
       text-align: center;
     }
 
+    @media (max-width: 980px) {
+      .book-grid { grid-template-columns: 1fr; }
+    }
+
     @media (max-width: 820px) {
-      .nav-wrap {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .nav-buttons {
-        justify-content: flex-start;
-        width: 100%;
-      }
-
-      .cards { grid-template-columns: 1fr; }
+      .nav-wrap { align-items: flex-start; flex-direction: column; }
+      .nav-buttons { justify-content: flex-start; width: 100%; }
       .hero { min-height: 60vh; padding-top: 70px; }
+      .book-card { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 520px) {
@@ -236,7 +382,7 @@
 <body>
   <header class="site-header">
     <div class="nav-wrap">
-      <a class="brand" href="#home" aria-label="Izabela home">IZABELA</a>
+      <a class="brand" href="#home" aria-label="Izabela Kozimala home">IZABELA KOZIMALA</a>
       <nav class="nav-buttons" aria-label="Main navigation">
         <a class="nav-button" href="#home">Home</a>
         <a class="nav-button" href="#about">About</a>
@@ -252,25 +398,70 @@
     <section class="hero" id="home">
       <div class="hero-inner">
         <p class="eyebrow">Official website</p>
-        <h1>Izabela</h1>
-        <p>A calm, elegant space for books, writing, reviews, appearances and news.</p>
+        <h1>Izabela Kozimala</h1>
+        <p>Books, poetry, reviews, events and news.</p>
       </div>
     </section>
 
     <section class="section" id="about">
       <p class="section-label">About</p>
       <h2>About Izabela</h2>
-      <p>This section is ready for a biography, author statement, portrait and other information you would like visitors to discover.</p>
+      <p>This section is ready for a biography, an author statement and a portrait. The Books button now leads directly to a visual shelf of titles.</p>
     </section>
 
     <section class="section" id="books">
       <p class="section-label">Books</p>
       <h2>Books</h2>
-      <p>Feature published books, forthcoming titles, cover images, descriptions and links here.</p>
-      <div class="cards" aria-label="Book placeholders">
-        <article class="card"><h3>Book One</h3><p>Add a cover, title and description.</p></article>
-        <article class="card"><h3>Book Two</h3><p>Add another publication or forthcoming title.</p></article>
-        <article class="card"><h3>Coming Soon</h3><p>Reserve this space for future work.</p></article>
+      <p>Clicking the <strong>Books</strong> button brings visitors here to a visible list of books. The titles are displayed as 3D-style covers, creating a small online shelf.</p>
+
+      <div class="book-grid" aria-label="Book list">
+        <article class="book-card">
+          <div class="book-3d cover-rose" aria-label="3D cover of Nowsza Niż Róża">
+            <div class="book-face">
+              <div class="cover-text">
+                <small>Pierwsza książka</small>
+                <strong>„Nowsza<br>Niż Róża”</strong>
+                <span>Izabela Kozimala</span>
+              </div>
+            </div>
+            <div class="book-page"></div>
+            <div class="book-spine"></div>
+          </div>
+          <div class="book-meta">
+            <h3>„Nowsza Niż Róża”</h3>
+            <p class="author">Izabela Kozimala</p>
+            <p>The first featured book on the website, now visible in the Books gallery as a 3D-style cover.</p>
+            <ul class="book-tags">
+              <li>First book</li>
+              <li>3D cover</li>
+              <li>Izabela Kozimala</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="book-card">
+          <div class="book-3d cover-sky" aria-label="3D cover of Roślinność w Stronę Nieboskłonu">
+            <div class="book-face">
+              <div class="cover-text">
+                <small>Poezja</small>
+                <strong>„Roślinność<br>w Stronę<br>Nieboskłonu”</strong>
+                <span>Izabela Kozimala</span>
+              </div>
+            </div>
+            <div class="book-page"></div>
+            <div class="book-spine"></div>
+          </div>
+          <div class="book-meta">
+            <h3>„Roślinność w Stronę Nieboskłonu”</h3>
+            <p class="author">Izabela Kozimala</p>
+            <p>The poetry book is also included in the list, presented as a matching 3D cover.</p>
+            <ul class="book-tags">
+              <li>Poetry</li>
+              <li>3D cover</li>
+              <li>Izabela Kozimala</li>
+            </ul>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -294,7 +485,7 @@
     </section>
   </main>
 
-  <footer>© <span id="year"></span> Izabela</footer>
+  <footer>© <span id="year"></span> Izabela Kozimala</footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
