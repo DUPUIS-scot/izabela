@@ -24,6 +24,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Assemble public GLB asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets/models
+          cat .model-payload/part-* | base64 --decode > assets/models/5_4_2024.glb
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('assets/models/5_4_2024.glb')
+          data = p.read_bytes()
+          if len(data) < 12 or data[:4] != b'glTF':
+              raise SystemExit('Invalid GLB payload')
+          print(f'GLB ready: {len(data)} bytes')
+          PY
+          rm -rf .model-payload
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
